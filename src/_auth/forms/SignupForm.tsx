@@ -20,7 +20,7 @@ const signupSchema = z.object({
     username: z.string().min(2, { message: "Username must be at least 2 characters." }),
     password: z.string().min(6, { message: "Password must be at least 6 characters." }),
     confirmPassword: z.string().min(6, { message: "Please confirm your password." }),
-    terms: z.boolean().refine((val) => val === true, { message: "You must agree to the terms and conditions." })
+    terms: z.string().refine((val) => val === "true" ? 'true' : 'false', { message: "You must agree to the terms and conditions." })
 });
 
 export const SignupForm: React.FC = () => {
@@ -32,7 +32,7 @@ export const SignupForm: React.FC = () => {
             username: "",
             password: "",
             confirmPassword: "",
-            terms: false,
+            terms: "False",
         },
     });
 
@@ -42,7 +42,7 @@ export const SignupForm: React.FC = () => {
 
     return (
         <div className="flex h-screen items-center justify-center">
-            <div className="text-center p-6 bg-white rounded-lg shadow-lg w-full max-w-md">
+            <div className="text-center p-6  bg-white rounded-lg shadow-lg w-full max-w-md">
                 <h1 className="text-xl font-semibold mb-4">Toegram</h1>
                 <span className="text-xs font-semibold">Sign up to see photos and videos from your friends.</span>
                 <Form {...form}>
@@ -113,7 +113,7 @@ export const SignupForm: React.FC = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="flex items-center space-x-2">
-                                        <input
+                                        <Input
                                             type="checkbox"
                                             className="form-checkbox h-5 w-5 text-blue-600 rounded"
                                             {...field}
@@ -139,6 +139,7 @@ export const SignupForm: React.FC = () => {
                     </form>
                 </Form>
             </div>
+
         </div>
     );
 };

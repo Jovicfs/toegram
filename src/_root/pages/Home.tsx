@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Sidebar } from '@/components/feed/Sidebar';
+import { Feed } from '@/components/feed/Feed';
+import { Messages } from '@/components/feed/Messages';
+import { MessagesProvider } from '@/context/MessagesContext';
 
-const Home = () => {
+function Home() {
+    const [activeTab, setActiveTab] = useState<'feed' | 'messages'>('feed');
+
     return (
-        <div>home</div>
-    )
-}
+        <MessagesProvider>
+            <div className="flex h-screen">
+                <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-export default Home
+                <main className="flex-1 flex w-full">
+                    {activeTab === 'feed' ? (
+                        <Feed />
+                    ) : (
+                        <Messages />
+                    )}
+                </main>
+            </div>
+        </MessagesProvider>
+    );
+}
+export default Home;
